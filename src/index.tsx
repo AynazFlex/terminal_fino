@@ -1,19 +1,64 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import ReactDOM from "react-dom/client";
+import "./styles/index.scss";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Main from "./components/main/Main";
+import { useReducer } from "react";
+import Payment from "./components/payment/Payment";
+import End from "./components/end/End";
+import LoginError from "./components/login_error/Error";
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  document.getElementById("root") as HTMLElement
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+interface IProduct {
+  product_type: string;
+  value: number;
+}
+
+export interface ICard {
+  bank: string;
+  last_four_digits: number;
+  cashback: IProduct[] | null;
+}
+
+export interface IState {
+  status_code?: number;
+  name?: string;
+  surname?: string;
+  middlename?: string;
+  cards?: ICard[];
+}
+
+export type TypeAction = { type: "SET"; payload: IState };
+
+const reducer = (state: IState, action: TypeAction): IState => {
+  switch (action.type) {
+    case "SET":
+      return { ...action.payload };
+    default:
+      return state;
+  }
+};
+
+const App = () => {
+  const [state, dispatch] = useReducer(reducer, {});
+
+  return (
+    <div className="app">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Main set={dispatch} />} />
+          <Route path="/payment" element={<Payment {...state} />} />
+          <Route path="/autologin-error" element={<LoginError />} />
+          <Route path="/end" element={<End />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
+};
+
+root.render(<App />);
+
 reportWebVitals();
