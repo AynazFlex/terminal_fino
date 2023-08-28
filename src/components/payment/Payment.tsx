@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ICard, IState } from "../..";
 import style from "./Payment.module.scss";
 import { FC, useEffect, useState } from "react";
@@ -40,8 +40,18 @@ const Cards: FC<ICards> = ({ cards }) => {
           </div>
         ))}
       </div>
+      <div className={style.payment__total}>
+        <span className={style.payment__total_item}>
+          <span>К оплате:</span>
+          <span>10000 руб</span>
+        </span>
+        <span className={style.payment__total_item}>
+          <span>Ваш кешбек составит:</span>
+          <span>5%</span>
+        </span>
+      </div>
       <Link to={"/end"} className={style.payment__pay}>
-        Оплаить
+        Оплатить
       </Link>
       <Link to={"/"} className={style.payment__cancel}>
         Отмена

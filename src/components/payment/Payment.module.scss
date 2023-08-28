@@ -4,6 +4,12 @@
     border-radius: 10px;
 }
 
+%bord {
+    border-radius: 20px;
+    padding: 20px;
+    border: 1px solid black;
+}
+
 .payment {
     font-size: 12px;
     font-weight: 400;
@@ -16,6 +22,21 @@
         align-items: center;
     }
 
+    &__total {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        @extend %bord;
+    }
+
+    &__total_item {
+        display: flex;
+        gap: 40px;
+        justify-content: space-between;
+        width: 100%;
+    }
+
     &__main {
         display: flex;
         flex-direction: column;
@@ -25,9 +46,7 @@
 
     &__main_cards {
         max-height: 600px;
-        border-radius: 20px;
-        padding: 20px;
-        border: 1px solid black;
+        @extend %bord;
         overflow-y: auto;
     }
 
@@ -37,7 +56,7 @@
         gap: 20px;
         align-items: center;
         padding: 10px;
-        border: 1px solid black;
+        border: 2px solid black;
         border-radius: 10px;
         margin-bottom: 10px;
         cursor: pointer;
@@ -49,6 +68,7 @@
 
     &__main_card_chs {
         border: 2px solid green !important;
+        background-color: aqua;
     }
 
     &__main_card_cashback {
