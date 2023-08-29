@@ -1,12 +1,19 @@
-import { useEffect } from "react";
+import { Dispatch, FC, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import style from "./End.module.scss";
+import { TypeAction } from "../..";
 
-const End = () => {
+interface IEnd {
+  set: Dispatch<TypeAction>;
+}
+
+const End: FC<IEnd> = ({ set }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(() => navigate("/", { replace: true }), 2000);
+
+    return () => set({ type: "SET", payload: {} });
   }, []);
 
   return (

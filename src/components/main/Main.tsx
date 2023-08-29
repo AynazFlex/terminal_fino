@@ -46,37 +46,24 @@ const Main: FC<IMain> = ({ set }) => {
       const context = canvas.getContext("2d");
       if (!context) return;
       context.drawImage(videoStream, 0, 0, canvas.width, canvas.height);
-      const formData = new FormData();
-      formData.append("image", canvas.toDataURL("image/jpeg"));
-      setTimeout(() => {
-        set({
-          type: "SET",
-          payload: {
-            status_code: 200,
-            name: "Aynaz",
-            surname: "Davletshin",
-            middlename: "Khanifovich",
-            cards: [
-              {
-                bank: "ВТБ",
-                last_four_digits: 1234,
-                cashback: [
-                  {
-                    product_type: "Одежда",
-                    value: 10,
-                  },
-                ],
-              },
-              {
-                bank: "Тинькофф",
-                last_four_digits: 4013,
-                cashback: null,
-              },
-            ],
-          },
-        });
-        navigate("/payment");
-      }, 2000);
+      canvas.toBlob((blob) => {
+        if (!blob) return;
+        const formData = new FormData();
+        formData.append("file_in", blob);
+        fetch("http://80.78.241.76/api/v1/terminal", {
+          method: "POST",
+          body: formData,
+        })
+          .then((res) => res.json())
+          .then((json) => {
+            set({
+              type: "SET",
+              payload: json,
+            });
+            navigate("/payment");
+          })
+          .catch(() => alert("Упс ошибкаю Сейчас исправим"));
+      }, "image/jpeg");
     };
   };
 

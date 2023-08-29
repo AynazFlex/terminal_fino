@@ -52,7 +52,7 @@ const App = () => {
           <Route path="/" element={<Main set={dispatch} />} />
           <Route path="/payment" element={<Payment {...state} />} />
           <Route path="/autologin-error" element={<LoginError />} />
-          <Route path="/end" element={<End />} />
+          <Route path="/end" element={<End set={dispatch} />} />
         </Routes>
       </BrowserRouter>
     </div>
