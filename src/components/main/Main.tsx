@@ -50,19 +50,21 @@ const Main: FC<IMain> = ({ set }) => {
         if (!blob) return;
         const formData = new FormData();
         formData.append("file_in", blob);
-        fetch("http://80.78.241.76/api/v1/terminal", {
-          method: "POST",
-          body: formData,
-        })
-          .then((res) => res.json())
-          .then((json) => {
-            set({
-              type: "SET",
-              payload: json,
-            });
-            navigate("/payment");
+        setTimeout(() => {
+          fetch("http://80.78.241.76/api/v1/terminal", {
+            method: "POST",
+            body: formData,
           })
-          .catch(() => alert("Упс ошибкаю Сейчас исправим"));
+            .then((res) => res.json())
+            .then((json) => {
+              set({
+                type: "SET",
+                payload: json,
+              });
+              navigate("/payment");
+            })
+            .catch(() => alert("Упс ошибкаю Сейчас исправим"));
+        }, 2000);
       }, "image/jpeg");
     };
   };
